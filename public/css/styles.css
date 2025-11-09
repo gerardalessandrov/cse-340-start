@@ -1,6 +1,343 @@
 /******* Change Box Model ***************/
-*,
+/* Body */
 *:before,
 *:after {
   box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  background-image: url("/images/site/small_check.jpg");
+}
+.content {
+  background-color: white;
+  border: 5px solid #02b0d2;
+  border-radius: 1%;
+  font-family: Arial, sans-serif;
+  width: 50%;
+  display: block;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 25px;
+}
+
+/* Header */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+.title {
+  font-size: x-large;
+  color: #0056b3;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+/* Navigation */
+nav {
+  background-color: black;
+  color: white;
+  width: 100%;
+  display: block;
+}
+nav ul {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  justify-content: space-around;
+  font-size: small;
+  list-style: none;
+}
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+nav ul li a:hover {
+  background-color: white;
+  color: black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* Hero Section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  margin: 0 auto; /* Centrar el contenedor */
+  opacity: 1;
+}
+
+.car-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Car Info Overlay */
+
+.car-info-overlay ul {
+  list-style: none;
+  text-align: left;
+}
+.div-delorean {
+  position: absolute;
+  background-color: white;
+  opacity: 0.5;
+  top: 0;
+  left: 5%;
+  max-width: 30%;
+
+  height: auto;
+  /* Truco para centrarlo horizontalmente */
+}
+.button {
+  padding: 10px 20px;
+  font-size: medium;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.delorean-button {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.delorean-list li {
+  font-size: smaller;
+}
+/* Bottom Content */
+.bottom-content {
+  display: flex;
+  gap: 35px;
+  justify-content: space-between; /* separa las columnas */
+  margin-top: 30px;
+  flex-wrap: nowrap; /* evita que se apilen */
+}
+
+.upgrades-section,
+.reviews-section {
+  flex: 1 1 45%; /* ⬅️ cada sección toma aprox. 45% del ancho */
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.upgrade {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.upgrade-item {
+  background: skyblue;
+  width: 100%;
+  text-align: center;
+  padding-top: 5px;
+  height: 15vh;
+}
+/* Review Section */
+.reviews-section {
+  width: 50%;
+  text-align: left;
+}
+
+.subtitle {
+  padding-bottom: 20px;
+}
+.reviews-list {
+  list-style: disc;
+  list-style-position: inside;
+  padding-left: 7px;
+}
+.paragraph {
+  padding-bottom: 20px;
+}
+/* Footer */
+
+footer {
+  padding-left: 20px;
+}
+/* VehicleDetailHtml*/
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+#inv-display li {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* optional max-width if needed */
+  width: 130px;
+}
+.error {
+  background-color: azure;
+  height: 100%;
+}
+#inv-display h2 {
+  font-size: smaller;
+  width: 100%;
+}
+#inv-display .namePrice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 1rem;
+  max-height: 50%;
+  width: 100%;
+}
+#inv-display img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.vehicle-detail {
+  display: flex;
+  width: 100%;
+}
+.vehicle-detail img {
+  width: 40%;
+  height: 50%;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+.bg-form {
+  background: rgb(237, 184, 85);
+  padding-left: 10px;
+}
+.bg-form h3 {
+  padding-top: 20px;
+}
+#addClassificationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 400px;
+  padding-bottom: 20px;
+}
+#addClassificationForm label {
+  font-weight: bold;
+  width: 100%;
+}
+#addClassificationForm input[type="text"] {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#addClassificationForm button[type="submit"] {
+  padding: 10px 15px;
+  align-self: flex-start;
+}
+#addClassificationView {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#addInventoryView {
+  /* Optional: Sets the width for the blue box */
+  max-width: 500px;
+  margin: 20px auto; /* Centers the box on the page */
+  padding: 20px;
+  background-color: #2e8b57; /* Example blue/teal color (Use the exact color from your theme) */
+  color: white; /* Text color inside the box */
+  border: 1px solid #000;
+}
+#addInventoryForm {
+  /* Use Flexbox for guaranteed vertical stacking */
+  display: flex;
+  flex-direction: column;
+
+  /* Sets the spacing between all elements (labels, inputs, select) */
+  gap: 5px;
+}
+/* Target all relevant input types and the textarea/select */
+#addInventoryForm label {
+  font-weight: bold;
+  margin-top: 10px; /* Add a little extra space above each label */
+  display: block; /* Ensure the label takes its own line */
+}
+
+#addInventoryForm input[type="text"],
+#addInventoryForm input[type="number"],
+#addInventoryForm textarea,
+#addInventoryForm select {
+  width: 100%; /* Makes the input span the full width */
+  padding: 10px;
+  margin-bottom: 5px; /* Space below the input field */
+
+  /* Ensures padding and border are included in the 100% width */
+  box-sizing: border-box;
+
+  /* Style consistency */
+  border: none;
+  border-radius: 4px;
+}
+
+#addInventoryForm textarea {
+  resize: vertical; /* Only allow vertical resizing */
+  height: 70px;
+}
+/* Style for placeholder text (may need browser prefixes) */
+#addInventoryForm input::placeholder,
+#addInventoryForm textarea::placeholder {
+  color: #888;
+  font-style: italic;
+}
+@media screen and (max-width: 768px) {
+  body {
+    background-image: none;
+  }
+  #inv-display {
+    display: block;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+  }
+  .vehicle-detail {
+    display: block;
+    width: 100%;
+  }
+  .content {
+    width: 100%;
+  }
+  nav {
+    display: block;
+  }
+  nav ul {
+    display: flex;
+  }
+  .bottom-content {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+  }
+  .div-delorean {
+    width: 40%;
+    bottom: 0;
+  }
+  .div-delorean h2 {
+    font-size: 1em;
+  }
+
+  .div-delorean li {
+    font-size: 0.9em;
+  }
+
+  .reviews-section {
+    width: 100%;
+  }
 }

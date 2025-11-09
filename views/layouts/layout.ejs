@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head") %>
-<!-- Imprime el valor sin escapar HTML, renderiza el HTML tal cual. -->
-<body>
-    <div id="wrapper">
-    <%- include("../partials/header") %>
-    <%- include("../partials/navigation") %>
-        <main>
-       <%- body %>
-        </main>
-            <%- include("../partials/footer") %>
+  <head>
+    <% include('../partials/head'); %>
+    <link rel="stylesheet" href="/css/styles.css" media="screen" />
+  </head>
+  <body>
+    <div class="content">
+      <%- include('../partials/header'); %> <%-
+      include('../partials/navigation'); %> %>
+      <main><%- body %></main>
+      <%- include('../partials/footer'); %>
     </div>
-</body>
+  </body>
 </html>
 <!-- Partial parte un todo -->
