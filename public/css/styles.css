@@ -50,7 +50,7 @@ nav ul {
   font-size: small;
   list-style: none;
 }
-nav ul li a {
+nav ul a li {
   color: white;
   text-decoration: none;
 }

@@ -5,17 +5,18 @@
 /* ***********************
  * Require Statements
  *************************/
+
 const express = require("express")
 const expressLayouts=require("express-ejs-layouts")
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
+
 // requiere express-ejs-layouts uso de las plantillas ejs
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 
-/* ***********************
- * Routes
- *************************/
-app.use(static)
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -24,12 +25,16 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 // la plantilla layout debe ser encontrada en views
 /* ***********************
+/* ***********************
  * Routes
  *************************/
+app.use(static)
 // Index route
-app.get("/",function(req,res){
-  res.render("index",{title:"Home"})
-})
+app.get("/", baseController.buildHome)
+
+// Inventory routes
+app.use("/inv", inventoryRoute)
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
