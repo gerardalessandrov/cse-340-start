@@ -1,0 +1,17 @@
+<div id="managementView">
+  <h1>Vehicle Management</h1>
+
+  <% if (title) { %> <% } else { %>
+  <h2>Welcome to the Inventory Management Page</h2>
+  <% } %> <%- locals.message %>
+
+  <div class="management-links">
+    <a href="/inv/add-classification" title="Click to add a new classification"
+      >Add New Classification</a
+    >
+    <br />
+    <a href="/inv/add-inventory" title="Click to add a new inventory item"
+      >Add New Inventory Item</a
+    >
+  </div>
+</div>

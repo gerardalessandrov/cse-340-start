@@ -13,6 +13,29 @@ Util.getNav = async function () {
   list += "</ul>"
   return list
 }
+Util.buildVehicleHTML=async function (vehicle) {
+  const usdPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(vehicle.inv_price);
+  const formattedMiles = Number(vehicle.inv_miles).toLocaleString("en-US");
+
+  return `
+    <div class="vehicle-detail">
+      <img src="${vehicle.inv_image}" alt="Imagen de ${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-image" />
+      <div class="vehicle-info">
+        <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>
+        <p><strong>Price:</strong> ${usdPrice}</p>
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+        <p><strong>Miles:</strong> ${formattedMiles} millas</p>
+
+      </div>
+    </div>
+  `;
+};
+
+
 Util.buildClassificationGrid = async function (data) {
   let grid = ""
 
@@ -39,5 +62,31 @@ Util.buildClassificationGrid = async function (data) {
   }
   return grid
 }
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications(); // Assume this function exists and returns { rows: [...] }
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>';
+  classificationList += "<option value=''>Choose a Classification</option>";
+  data.rows.forEach((row) => {
+    classificationList += '<option value="' + row.classification_id + '"';
+    if (
+      classification_id != null &&
+      row.classification_id == row.classification_id // Note: Fixed to compare row.classification_id == classification_id
+    ) {
+      classificationList += " selected ";
+    }
+    classificationList += ">" + row.classification_name + "</option>";
+  });
+  classificationList += "</select>";
+  return classificationList;
+};
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => 
+  Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util

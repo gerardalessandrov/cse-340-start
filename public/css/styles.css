@@ -31,7 +31,7 @@ body {
   font-size: x-large;
   color: #0056b3;
 }
-a {
+.namePrice a {
   text-decoration: none;
   color: black;
 }
@@ -41,6 +41,12 @@ nav {
   color: white;
   width: 100%;
   display: block;
+  text-decoration: none;
+}
+nav a{
+  color: white;
+  text-decoration: none;
+
 }
 nav ul {
   display: flex;
@@ -71,7 +77,7 @@ nav ul li a:hover {
 }
 
 .car-img {
-  display: block;
+  display: flex;
   width: 100%;
   height: auto;
 }
@@ -208,10 +214,11 @@ footer {
   width: 100%;
 }
 .vehicle-detail img {
-  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 50%;
   height: 50%;
-  padding-left: 5px;
-  padding-right: 10px;
 }
 .bg-form {
   background: rgb(237, 184, 85);
@@ -307,9 +314,19 @@ footer {
     justify-content: center;
   }
   .vehicle-detail {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    justify-content: center;
+    align-content: center;
   }
+  main{
+    text-align: left;
+  }
+  h1{
+    text-align: center;
+  }
+  
   .content {
     width: 100%;
   }
