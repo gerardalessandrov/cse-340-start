@@ -1,5 +1,43 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+const flash = require('connect-flash');
+require("dotenv").config()
+
+
+Util.checkJWTToken=async function(req, res, next) {
+  const token = req.cookies.jwt
+
+  if (!token) {
+    res.locals.loggedin = false
+    return next()
+  }
+
+  try {
+    const accountData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    res.locals.loggedin = true
+    res.locals.accountData = accountData
+    next()
+  } catch (err) {
+    res.clearCookie("jwt")
+    req.flash("notice", "Session expired, please log in again.")
+    res.redirect("/account/login")
+  }
+}
+
+Util.checkEmployee=async function(req, res, next) {
+  const type = res.locals.accountData?.account_type
+
+  if (type === "Employee" || type === "Admin") {
+    return next()
+  }
+
+  req.flash("notice", "Access denied.")
+  res.status(403).render("account/login")
+}
+
+
+
 
 Util.getNav = async function () {
   let data = await invModel.getClassifications()
@@ -82,7 +120,7 @@ Util.buildClassificationList = async function (classification_id = null) {
 };
 
 /* ****************************************
- * Middleware For Handling Errors
+ * Middleware For ling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
