@@ -1,6 +1,8 @@
 <!-- views/partials/messages.ejs -->
-<% if (locals.message || message) { %>
-  <div class="notice">
-    <%= locals.message || message %>
-  </div>
+<% if (locals.messages) { %>
+  <% locals.messages.forEach(function(msg) { %>
+    <div class="notice">
+      <%= msg %>
+    </div>
+  <% }) %>
 <% } %>

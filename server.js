@@ -10,12 +10,12 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
-const accountRoute = require("./routes/accountRoute") // ← AGREGAR ESTA LÍNEA
+const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const flash = require("connect-flash")
-const cookieParser = require("cookie-parser") // ← AGREGAR (necesario para JWT)
-const jwt = require("jsonwebtoken") // ← AGREGAR (necesario para verificar JWT)
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
@@ -33,16 +33,22 @@ app.set("layout", "./layouts/layout")
 app.use(static)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser()) // ← AGREGAR (debe ir antes de session)
+app.use(cookieParser())
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "supersecret", // Mejor usar variable de entorno
+    secret: process.env.SESSION_SECRET || "supersecret",
     resave: false,
     saveUninitialized: false,
   })
 )
 app.use(flash())
+
+// Middleware para hacer disponibles los mensajes flash en todas las vistas
+app.use((req, res, next) => {
+  res.locals.messages = req.flash('notice')
+  next()
+})
 
 // Middleware para hacer disponible el nav globalmente
 app.use(async (req, res, next) => {
@@ -79,7 +85,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
-// Account routes ← AGREGAR ESTA LÍNEA
+// Account routes
 app.use("/account", accountRoute)
 
 /* ***********************

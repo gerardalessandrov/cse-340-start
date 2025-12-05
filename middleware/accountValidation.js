@@ -3,6 +3,68 @@ const utilities = require("../utilities/")
 const accountModel = require("../models/account-model")
 
 /* ****************************************
+ * Registration validation rules
+ * *************************************** */
+function registrationRules() {
+  return [
+    body("account_firstname")
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    body("account_lastname")
+      .trim()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists) {
+          throw new Error("Email exists. Please log in or use different email")
+        }
+      }),
+
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
+  ]
+}
+
+/* ****************************************
+ * Check registration data
+ * *************************************** */
+async function checkRegData(req, res, next) {
+  const { account_firstname, account_lastname, account_email } = req.body
+  let errors = validationResult(req)
+  
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/register", {
+      errors,
+      title: "Registration",
+      nav,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+    return
+  }
+  next()
+}
+
+/* ****************************************
  * Login validation rules
  * *************************************** */
 function loginRules() {
@@ -20,7 +82,7 @@ function loginRules() {
 }
 
 /* ****************************************
- * Check data and return to login view or proceed
+ * Check login data
  * *************************************** */
 function checkLoginData(req, res, next) {
   const errors = validationResult(req)
@@ -32,7 +94,7 @@ function checkLoginData(req, res, next) {
 }
 
 /* ****************************************
- * Account update validation rules (Name/Email)
+ * Account update validation rules
  * *************************************** */
 function updateAccountRules() {
   return [
@@ -40,10 +102,12 @@ function updateAccountRules() {
       .trim()
       .notEmpty()
       .withMessage("First name is required."),
+    
     body("account_lastname")
       .trim()
       .notEmpty()
       .withMessage("Last name is required."),
+    
     body("account_email")
       .trim()
       .isEmail()
@@ -52,7 +116,7 @@ function updateAccountRules() {
 }
 
 /* ****************************************
- * Check data and return to update view or proceed
+ * Check update data
  * *************************************** */
 function checkUpdateData(req, res, next) {
   const errors = validationResult(req)
@@ -69,7 +133,7 @@ function checkUpdateData(req, res, next) {
  * *************************************** */
 function updatePasswordRules() {
   return [
-    body("password") // ← CORREGIDO: era "account_password"
+    body("password")
       .trim()
       .isLength({ min: 12 })
       .withMessage("Password must be at least 12 characters.")
@@ -83,7 +147,7 @@ function updatePasswordRules() {
 }
 
 /* ****************************************
- * Check data and return to update view or proceed
+ * Check password data
  * *************************************** */
 function checkPasswordData(req, res, next) {
   const errors = validationResult(req)
@@ -96,6 +160,8 @@ function checkPasswordData(req, res, next) {
 }
 
 module.exports = {
+  registrationRules,
+  checkRegData,
   loginRules,
   checkLoginData,
   updateAccountRules,
