@@ -6,17 +6,33 @@ const utilities = require("../utilities")
 const accountValidation = require("../middleware/accountValidation")
 
 // --------------------------
+// REGISTRATION ROUTES
+// --------------------------
+
+// GET registration page
+router.get("/register", utilities.handleErrors(accountController.buildRegister))
+
+// POST registration - create new account
+router.post(
+  "/register",
+  accountValidation.registrationRules(),
+  accountValidation.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+)
+
+// --------------------------
 // LOGIN ROUTES
 // --------------------------
 
 // GET login page
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
+router.get("/login", utilities.handleErrors(accountController.buildLogin))
+
 // POST login - authenticate user
 router.post(
   "/login",
   accountValidation.loginRules(),
   accountValidation.checkLoginData,
-  accountController.accountLogin
+  utilities.handleErrors(accountController.accountLogin)
 )
 
 // --------------------------
@@ -35,7 +51,7 @@ router.get("/logout", (req, res) => {
 // GET account dashboard / management view
 router.get(
   "/",
-  utilities.checkJWTToken,        // Verifica JWT y llena res.locals
+  utilities.checkJWTToken,
   utilities.handleErrors(accountController.buildAccountManagement)
 )
 

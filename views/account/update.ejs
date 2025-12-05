@@ -5,13 +5,13 @@
 
 <form action="/account/update/<%= account_id %>" method="POST">
   <label>First Name</label>
-  <input type="text" name="firstname" value="<%= account_firstname %>" required>
+  <input type="text" name="account_firstname" value="<%= account_firstname %>" required>
 
   <label>Last Name</label>
-  <input type="text" name="lastname" value="<%= account_lastname %>" required>
+  <input type="text" name="account_lastname" value="<%= account_lastname %>" required>
 
   <label>Email</label>
-  <input type="email" name="email" value="<%= account_email %>" required>
+  <input type="email" name="account_email" value="<%= account_email %>" required>
 
   <input type="hidden" name="account_id" value="<%= account_id %>">
   <button type="submit">Update Account</button>
