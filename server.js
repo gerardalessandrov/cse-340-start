@@ -2,15 +2,12 @@
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
-/* ***********************
- * Require Statements
- *************************/
-
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
+const favoriteRoute = require("./routes/favoriteRoute") // ← Agregar aquí
 const utilities = require("./utilities/")
 const session = require("express-session")
 const flash = require("connect-flash")
@@ -19,7 +16,7 @@ const jwt = require("jsonwebtoken")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
-const favoriteRoute = require("./routes/favoriteRoute")
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -44,7 +41,7 @@ app.use(
 )
 app.use(flash())
 
-// Middleware para hacer disponibles los mensajes flash en todas las vistas
+// Middleware para hacer disponibles los mensajes flash
 app.use((req, res, next) => {
   res.locals.messages = req.flash('notice')
   next()
@@ -55,7 +52,6 @@ app.use(async (req, res, next) => {
   res.locals.nav = await utilities.getNav()
   next()
 })
-app.use("/favorites", favoriteRoute)
 
 // Middleware para verificar JWT y establecer locals
 app.use(async (req, res, next) => {
@@ -89,12 +85,14 @@ app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", accountRoute)
 
+// Favorites routes (DESPUÉS de JWT middleware)
+app.use("/favorites", favoriteRoute)
+
 /* ***********************
- * Error Handlers - DEBEN IR AL FINAL
+ * Error Handlers
  *************************/
 // 404 Handler
 app.use(async (req, res, next) => {
-  // Ignore favicon requests
   if (req.url === '/favicon.ico') {
     return res.status(204).end()
   }
@@ -130,9 +128,6 @@ app.use(async (err, req, res, next) => {
 const port = process.env.PORT
 const host = process.env.HOST
 
-/* ***********************
- * Log statement to confirm server operation
- *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })

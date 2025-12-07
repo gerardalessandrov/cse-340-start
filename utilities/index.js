@@ -32,13 +32,17 @@ Util.buildFavoriteButton = function(inv_id, isFavorite) {
 /* ****************************************
  * Check JWT Token Middleware
  * *************************************** */
+/* ****************************************
+ * Check JWT Token Middleware
+ * *************************************** */
 Util.checkJWTToken = async function(req, res, next) {
   const token = req.cookies.jwt
 
   if (!token) {
     res.locals.loggedin = false
     res.locals.accountData = null
-    return next()
+    req.flash("notice", "Please log in to access this feature.")
+    return res.redirect("/account/login")
   }
 
   try {
