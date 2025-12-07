@@ -1,30 +1,66 @@
-<h1><%= title %></h1>
+<div class="form-container">
+  <h1><%= title %></h1>
 
-<%- include("../partials/messages") %>
+  <%- include("../partials/messages") %>
 
-<h2>Account Update</h2>
+  <h2>Account Update</h2>
 
-<form action="/account/update/<%= account_id %>" method="POST">
-  <label>First Name</label>
-  <input type="text" name="account_firstname" value="<%= account_firstname %>" required>
+  <form action="/account/update/<%= account_id %>" method="POST">
+    <div>
+      <label for="account_firstname">First Name</label>
+      <input 
+        type="text" 
+        id="account_firstname" 
+        name="account_firstname" 
+        value="<%= account_firstname %>" 
+        required
+      >
+    </div>
 
-  <label>Last Name</label>
-  <input type="text" name="account_lastname" value="<%= account_lastname %>" required>
+    <div>
+      <label for="account_lastname">Last Name</label>
+      <input 
+        type="text" 
+        id="account_lastname" 
+        name="account_lastname" 
+        value="<%= account_lastname %>" 
+        required
+      >
+    </div>
 
-  <label>Email</label>
-  <input type="email" name="account_email" value="<%= account_email %>" required>
+    <div>
+      <label for="account_email">Email</label>
+      <input 
+        type="email" 
+        id="account_email" 
+        name="account_email" 
+        value="<%= account_email %>" 
+        required
+      >
+    </div>
 
-  <input type="hidden" name="account_id" value="<%= account_id %>">
-  <button type="submit">Update Account</button>
-</form>
+    <input type="hidden" name="account_id" value="<%= account_id %>">
+    <button type="submit">Update Account</button>
+  </form>
 
-<h2>Change Password</h2>
+  <h2 style="margin-top: 40px;">Change Password</h2>
 
-<form action="/account/update-password/<%= account_id %>" method="POST">
-  <label>New Password</label>
-  <input type="password" name="password" required>
-  <p>Password must be at least 12 characters and contain numbers and symbols.</p>
+  <form action="/account/update-password/<%= account_id %>" method="POST">
+    <div>
+      <label for="password">New Password</label>
+      <input 
+        type="password" 
+        id="password" 
+        name="password" 
+        required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      >
+      <p class="password-requirements">
+        Password must be at least 12 characters and contain uppercase, lowercase, numbers and symbols.
+      </p>
+    </div>
 
-  <input type="hidden" name="account_id" value="<%= account_id %>">
-  <button type="submit">Change Password</button>
-</form>
+    <input type="hidden" name="account_id" value="<%= account_id %>">
+    <button type="submit">Change Password</button>
+  </form>
+</div>

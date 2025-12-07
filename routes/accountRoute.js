@@ -38,12 +38,8 @@ router.post(
 // --------------------------
 // LOGOUT ROUTE
 // --------------------------
-router.get("/logout", (req, res) => {
-  res.clearCookie("jwt")
-  req.flash("notice", "You have been logged out.")
-  res.redirect("/")
-})
-
+// LOGOUT ROUTE (CORREGIDO)
+router.get("/logout", accountController.accountLogout)
 // --------------------------
 // ACCOUNT MANAGEMENT ROUTES
 // --------------------------

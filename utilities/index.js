@@ -3,7 +3,32 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 const Util = {}
+// Agregar al final del archivo, antes de module.exports
 
+/* ****************************************
+ * Build Favorite Button
+ * *************************************** */
+Util.buildFavoriteButton = function(inv_id, isFavorite) {
+  if (isFavorite) {
+    return `
+      <form action="/favorites/remove" method="POST" style="display:inline;">
+        <input type="hidden" name="inv_id" value="${inv_id}">
+        <button type="submit" class="btn-favorite active">
+          ❤️ Remove from Favorites
+        </button>
+      </form>
+    `
+  } else {
+    return `
+      <form action="/favorites/add" method="POST" style="display:inline;">
+        <input type="hidden" name="inv_id" value="${inv_id}">
+        <button type="submit" class="btn-favorite">
+          🤍 Add to Favorites
+        </button>
+      </form>
+    `
+  }
+}
 /* ****************************************
  * Check JWT Token Middleware
  * *************************************** */

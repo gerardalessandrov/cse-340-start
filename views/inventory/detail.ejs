@@ -9,10 +9,43 @@
   <body>
     <main>
       <h1><%= title %></h1>
+      
+      <!-- AGREGAR ESTE BLOQUE -->
+      <% if (locals.favoriteButton) { %>
+        <div style="margin: 15px 0;">
+          <%- favoriteButton %>
+        </div>
+      <% } %>
+      
       <section class="detail-container">
         <%- detailHtml %>
-        <!-- Aquí inyectamos el HTML generado en utilidades -->
       </section>
     </main>
+    
+    <style>
+      .btn-favorite {
+        background: #2a7ae4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      
+      .btn-favorite:hover {
+        background: #1a5fb4;
+        transform: scale(1.05);
+      }
+      
+      .btn-favorite.active {
+        background: #dc3545;
+      }
+      
+      .btn-favorite.active:hover {
+        background: #c82333;
+      }
+    </style>
   </body>
 </html>

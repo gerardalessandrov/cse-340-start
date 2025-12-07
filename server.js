@@ -19,7 +19,7 @@ const jwt = require("jsonwebtoken")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
-
+const favoriteRoute = require("./routes/favoriteRoute")
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -55,6 +55,7 @@ app.use(async (req, res, next) => {
   res.locals.nav = await utilities.getNav()
   next()
 })
+app.use("/favorites", favoriteRoute)
 
 // Middleware para verificar JWT y establecer locals
 app.use(async (req, res, next) => {
@@ -93,6 +94,11 @@ app.use("/account", accountRoute)
  *************************/
 // 404 Handler
 app.use(async (req, res, next) => {
+  // Ignore favicon requests
+  if (req.url === '/favicon.ico') {
+    return res.status(204).end()
+  }
+  
   next({
     status: 404,
     message: 'Sorry, we appear to have lost that page.'

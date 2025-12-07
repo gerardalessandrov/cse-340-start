@@ -19,25 +19,36 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 invCont.getVehicleDetail = async (req, res, next) => {
-   const invId = req.params.inv_id; // Obtiene el ID de la URL
+  const invId = req.params.inv_id
+  const favoriteModel = require("../models/favorite-model") // Agregar esta línea
 
   try {
-    const vehicleData = await invModel.getVehicleById(invId); // Busca en DB
+    const vehicleData = await invModel.getVehicleById(invId)
     if (!vehicleData) {
-      return res.status(404).send("Vehículo no encontrado.");
+      return res.status(404).send("Vehículo no encontrado.")
     }
 
-    const detailHtml = await utilities.buildVehicleHTML(vehicleData); // Envuelve en HTML
-    const nav = await utilities.getNav();
+    const detailHtml = await utilities.buildVehicleHTML(vehicleData)
+    const nav = await utilities.getNav()
+    
+    // Check if user is logged in and if vehicle is favorite
+    let favoriteButton = ""
+    if (res.locals.loggedin) {
+      const account_id = res.locals.accountData.account_id
+      const isFav = await favoriteModel.isFavorite(account_id, invId)
+      favoriteButton = utilities.buildFavoriteButton(invId, isFav)
+    }
+
     res.render("inventory/detail", {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       nav,
-      detailHtml, // Enviamos HTML ya listo
-    });
+      detailHtml,
+      favoriteButton, // Agregar esto
+    })
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 invCont.triggerError = async function (req, res, next) {
   try {
     throw new Error("Oh no! There was a crash. Maybe try a different route");

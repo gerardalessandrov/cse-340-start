@@ -1,8 +1,19 @@
-<h2>Welcome <%= accountData.account_firstname %></h2>
+<div class="form-container">
+  <h1>Account Management</h1>
+  
+  <%- include("../partials/messages") %>
 
-<a href="/account/update/<%= accountData.account_id %>">Update Account Information</a>
+  <h2>Welcome <%= accountData.account_firstname %> <%= accountData.account_lastname %>!</h2>
 
-<% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
-    <h3>Inventory Management</h3>
-    <p><a href="/inv/">Go to Inventory Management</a></p>
-<% } %>
+  <div class="management-links">
+    <a href="/account/update/<%= accountData.account_id %>">
+      Update Account Information
+    </a>
+
+    <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+      <a href="/inv/">
+        Go to Inventory Management
+      </a>
+    <% } %>
+  </div>
+</div>
